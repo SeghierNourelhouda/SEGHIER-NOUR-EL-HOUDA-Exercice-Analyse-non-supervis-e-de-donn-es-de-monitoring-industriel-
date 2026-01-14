@@ -1,0 +1,597 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyO1/3R/Z3aQsODNphXeu5GB",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/SeghierNourelhouda/SEGHIER-NOUR-EL-HOUDA-Exercice-Analyse-non-supervis-e-de-donn-es-de-monitoring-industriel-/blob/main/Exercise%20AutoML\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Nom : Seghier\n",
+        "\n",
+        "Prénom : Nour El Houda\n",
+        "\n",
+        "Domaine : Génie des Procédés\n",
+        "\n",
+        "Spécialité : Procédés Organiques\n"
+      ],
+      "metadata": {
+        "id": "Qoucw-xL4GQi"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Exercise:\n",
+        "1. Run the demo script first to ensure everything works\n",
+        "2. Experiment your actual data(Housing dataset) with different frameworks:\n",
+        "\n",
+        "o H2O AutoML\n",
+        "\n",
+        "o Auto-sklearn\n",
+        "\n",
+        "o TPOT\n",
+        "\n",
+        "o MLJAR"
+      ],
+      "metadata": {
+        "id": "bCMmV6g95B98"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "7zkttH9R7whX",
+        "outputId": "6889bc56-2c3d-4caf-b2cc-3f83e33e6800"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m6.5/6.5 MB\u001b[0m \u001b[31m32.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Installing build dependencies ... \u001b[?25l\u001b[?25hdone\n",
+            "  Getting requirements to build wheel ... \u001b[?25l\u001b[?25hdone\n",
+            "  Preparing metadata (pyproject.toml) ... \u001b[?25l\u001b[?25hdone\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m127.3/127.3 kB\u001b[0m \u001b[31m8.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m7.5/7.5 MB\u001b[0m \u001b[31m31.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Installing build dependencies ... \u001b[?25l\u001b[?25hdone\n",
+            "  Getting requirements to build wheel ... \u001b[?25l\u001b[?25hdone\n",
+            "  \u001b[1;31merror\u001b[0m: \u001b[1msubprocess-exited-with-error\u001b[0m\n",
+            "  \n",
+            "  \u001b[31m×\u001b[0m \u001b[32mPreparing metadata \u001b[0m\u001b[1;32m(\u001b[0m\u001b[32mpyproject.toml\u001b[0m\u001b[1;32m)\u001b[0m did not run successfully.\n",
+            "  \u001b[31m│\u001b[0m exit code: \u001b[1;36m1\u001b[0m\n",
+            "  \u001b[31m╰─>\u001b[0m See above for output.\n",
+            "  \n",
+            "  \u001b[1;35mnote\u001b[0m: This error originates from a subprocess, and is likely not a problem with pip.\n",
+            "  Preparing metadata (pyproject.toml) ... \u001b[?25l\u001b[?25herror\n",
+            "\u001b[1;31merror\u001b[0m: \u001b[1mmetadata-generation-failed\u001b[0m\n",
+            "\n",
+            "\u001b[31m×\u001b[0m Encountered error while generating package metadata.\n",
+            "\u001b[31m╰─>\u001b[0m See above for output.\n",
+            "\n",
+            "\u001b[1;35mnote\u001b[0m: This is an issue with the package mentioned above, not pip.\n",
+            "\u001b[1;36mhint\u001b[0m: See above for details.\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Installer les frameworks AutoML et les bibliothèques nécessaires\n",
+        "!pip install -q h2o auto-sklearn tpot mljar-supervised\n",
+        "!pip install -q pandas numpy scikit-learn matplotlib seaborn\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "from sklearn.datasets import fetch_california_housing\n",
+        "\n",
+        "# Charger le dataset Housing\n",
+        "data = fetch_california_housing(as_frame=True)\n",
+        "df = data.frame\n",
+        "\n",
+        "# Afficher les 5 premières lignes\n",
+        "print(df.head())\n",
+        "\n",
+        "# Vérifier la taille du dataset\n",
+        "print(\"Nombre de lignes:\", df.shape[0])\n",
+        "print(\"Nombre de colonnes:\", df.shape[1])\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "26ruMVZO8FIP",
+        "outputId": "55520c84-20f6-48b3-93e9-e07b48e1642c"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "   MedInc  HouseAge  AveRooms  AveBedrms  Population  AveOccup  Latitude  \\\n",
+            "0  8.3252      41.0  6.984127   1.023810       322.0  2.555556     37.88   \n",
+            "1  8.3014      21.0  6.238137   0.971880      2401.0  2.109842     37.86   \n",
+            "2  7.2574      52.0  8.288136   1.073446       496.0  2.802260     37.85   \n",
+            "3  5.6431      52.0  5.817352   1.073059       558.0  2.547945     37.85   \n",
+            "4  3.8462      52.0  6.281853   1.081081       565.0  2.181467     37.85   \n",
+            "\n",
+            "   Longitude  MedHouseVal  \n",
+            "0    -122.23        4.526  \n",
+            "1    -122.22        3.585  \n",
+            "2    -122.24        3.521  \n",
+            "3    -122.25        3.413  \n",
+            "4    -122.25        3.422  \n",
+            "Nombre de lignes: 20640\n",
+            "Nombre de colonnes: 9\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "X = df.drop(columns=[\"MedHouseVal\"])\n",
+        "y = df[\"MedHouseVal\"]\n",
+        "\n",
+        "X_train, X_test, y_train, y_test = train_test_split(\n",
+        "    X, y, test_size=0.2, random_state=42\n",
+        ")\n"
+      ],
+      "metadata": {
+        "id": "fMwc-1SL8M_e"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install -q h2o\n",
+        "\n",
+        "import h2o\n",
+        "from h2o.automl import H2OAutoML\n",
+        "import numpy as np\n",
+        "from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score\n",
+        "import pandas as pd\n",
+        "\n",
+        "h2o.init(max_mem_size=\"2G\")\n",
+        "\n",
+        "train_h2o = h2o.H2OFrame(pd.concat([X_train, y_train], axis=1))\n",
+        "test_h2o  = h2o.H2OFrame(pd.concat([X_test, y_test], axis=1))\n",
+        "\n",
+        "x_cols = X_train.columns.tolist()\n",
+        "y_col = \"MedHouseVal\"\n",
+        "\n",
+        "aml = H2OAutoML(max_runtime_secs=120, seed=42)  # 2 minutes pour Colab\n",
+        "aml.train(x=x_cols, y=y_col, training_frame=train_h2o)\n",
+        "\n",
+        "leader = aml.leader\n",
+        "preds_h2o = leader.predict(test_h2o).as_data_frame().values.ravel()\n",
+        "\n",
+        "mse_h2o  = mean_squared_error(y_test, preds_h2o)\n",
+        "rmse_h2o = np.sqrt(mse_h2o)\n",
+        "mae_h2o  = mean_absolute_error(y_test, preds_h2o)\n",
+        "r2_h2o   = r2_score(y_test, preds_h2o)\n",
+        "\n",
+        "print(aml.leaderboard.head())\n",
+        "print(f\"H2O AutoML — RMSE: {rmse_h2o:.4f}, MAE: {mae_h2o:.4f}, R2: {r2_h2o:.4f}\")\n",
+        "\n",
+        "h2o.shutdown(prompt=False)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 978
+        },
+        "id": "W2CxBENz8UM-",
+        "outputId": "38e850fc-f6f6-4b04-97c8-729fbf5b5865"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m266.0/266.0 MB\u001b[0m \u001b[31m4.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hChecking whether there is an H2O instance running at http://localhost:54321..... not found.\n",
+            "Attempting to start a local H2O server...\n",
+            "  Java Version: openjdk version \"17.0.17\" 2025-10-21; OpenJDK Runtime Environment (build 17.0.17+10-Ubuntu-122.04); OpenJDK 64-Bit Server VM (build 17.0.17+10-Ubuntu-122.04, mixed mode, sharing)\n",
+            "  Starting server from /usr/local/lib/python3.12/dist-packages/h2o/backend/bin/h2o.jar\n",
+            "  Ice root: /tmp/tmpkfcq1954\n",
+            "  JVM stdout: /tmp/tmpkfcq1954/h2o_unknownUser_started_from_python.out\n",
+            "  JVM stderr: /tmp/tmpkfcq1954/h2o_unknownUser_started_from_python.err\n",
+            "  Server is running at http://127.0.0.1:54321\n",
+            "Connecting to H2O server at http://127.0.0.1:54321 ... successful.\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "--------------------------  -----------------------------------------------------------------------------------------\n",
+              "H2O_cluster_uptime:         03 secs\n",
+              "H2O_cluster_timezone:       Etc/UTC\n",
+              "H2O_data_parsing_timezone:  UTC\n",
+              "H2O_cluster_version:        3.46.0.9\n",
+              "H2O_cluster_version_age:    1 month and 20 days\n",
+              "H2O_cluster_name:           H2O_from_python_unknownUser_7kgwdb\n",
+              "H2O_cluster_total_nodes:    1\n",
+              "H2O_cluster_free_memory:    1.980 Gb\n",
+              "H2O_cluster_total_cores:    2\n",
+              "H2O_cluster_allowed_cores:  2\n",
+              "H2O_cluster_status:         locked, healthy\n",
+              "H2O_connection_url:         http://127.0.0.1:54321\n",
+              "H2O_connection_proxy:       {\"http\": null, \"https\": null, \"colab_language_server\": \"/usr/colab/bin/language_service\"}\n",
+              "H2O_internal_security:      False\n",
+              "Python_version:             3.12.12 final\n",
+              "--------------------------  -----------------------------------------------------------------------------------------"
+            ],
+            "text/html": [
+              "\n",
+              "<style>\n",
+              "\n",
+              "#h2o-table-1.h2o-container {\n",
+              "  overflow-x: auto;\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table {\n",
+              "  /* width: 100%; */\n",
+              "  margin-top: 1em;\n",
+              "  margin-bottom: 1em;\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table caption {\n",
+              "  white-space: nowrap;\n",
+              "  caption-side: top;\n",
+              "  text-align: left;\n",
+              "  /* margin-left: 1em; */\n",
+              "  margin: 0;\n",
+              "  font-size: larger;\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table thead {\n",
+              "  white-space: nowrap; \n",
+              "  position: sticky;\n",
+              "  top: 0;\n",
+              "  box-shadow: 0 -1px inset;\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table tbody {\n",
+              "  overflow: auto;\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table th,\n",
+              "#h2o-table-1 .h2o-table td {\n",
+              "  text-align: right;\n",
+              "  /* border: 1px solid; */\n",
+              "}\n",
+              "#h2o-table-1 .h2o-table tr:nth-child(even) {\n",
+              "  /* background: #F5F5F5 */\n",
+              "}\n",
+              "\n",
+              "</style>      \n",
+              "<div id=\"h2o-table-1\" class=\"h2o-container\">\n",
+              "  <table class=\"h2o-table\">\n",
+              "    <caption></caption>\n",
+              "    <thead></thead>\n",
+              "    <tbody><tr><td>H2O_cluster_uptime:</td>\n",
+              "<td>03 secs</td></tr>\n",
+              "<tr><td>H2O_cluster_timezone:</td>\n",
+              "<td>Etc/UTC</td></tr>\n",
+              "<tr><td>H2O_data_parsing_timezone:</td>\n",
+              "<td>UTC</td></tr>\n",
+              "<tr><td>H2O_cluster_version:</td>\n",
+              "<td>3.46.0.9</td></tr>\n",
+              "<tr><td>H2O_cluster_version_age:</td>\n",
+              "<td>1 month and 20 days</td></tr>\n",
+              "<tr><td>H2O_cluster_name:</td>\n",
+              "<td>H2O_from_python_unknownUser_7kgwdb</td></tr>\n",
+              "<tr><td>H2O_cluster_total_nodes:</td>\n",
+              "<td>1</td></tr>\n",
+              "<tr><td>H2O_cluster_free_memory:</td>\n",
+              "<td>1.980 Gb</td></tr>\n",
+              "<tr><td>H2O_cluster_total_cores:</td>\n",
+              "<td>2</td></tr>\n",
+              "<tr><td>H2O_cluster_allowed_cores:</td>\n",
+              "<td>2</td></tr>\n",
+              "<tr><td>H2O_cluster_status:</td>\n",
+              "<td>locked, healthy</td></tr>\n",
+              "<tr><td>H2O_connection_url:</td>\n",
+              "<td>http://127.0.0.1:54321</td></tr>\n",
+              "<tr><td>H2O_connection_proxy:</td>\n",
+              "<td>{\"http\": null, \"https\": null, \"colab_language_server\": \"/usr/colab/bin/language_service\"}</td></tr>\n",
+              "<tr><td>H2O_internal_security:</td>\n",
+              "<td>False</td></tr>\n",
+              "<tr><td>Python_version:</td>\n",
+              "<td>3.12.12 final</td></tr></tbody>\n",
+              "  </table>\n",
+              "</div>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%\n",
+            "Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%\n",
+            "AutoML progress: |███████████████████████████████████████████████████████████████| (done) 100%\n",
+            "stackedensemble prediction progress: |███████████████████████████████████████████| (done) 100%\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/h2o/frame.py:1983: H2ODependencyWarning: Converting H2O frame to pandas dataframe using single-thread.  For faster conversion using multi-thread, install polars and pyarrow and use it as pandas_df = h2o_df.as_data_frame(use_multi_thread=True)\n",
+            "\n",
+            "  warnings.warn(\"Converting H2O frame to pandas dataframe using single-thread.  For faster conversion using\"\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "model_id                                                     rmse       mse       mae     rmsle    mean_residual_deviance\n",
+            "StackedEnsemble_AllModels_1_AutoML_1_20260114_104213     0.45721   0.209041  0.299129  0.137237                  0.209041\n",
+            "StackedEnsemble_BestOfFamily_2_AutoML_1_20260114_104213  0.457744  0.209529  0.300003  0.137673                  0.209529\n",
+            "StackedEnsemble_BestOfFamily_1_AutoML_1_20260114_104213  0.458033  0.209794  0.300323  0.13785                   0.209794\n",
+            "GBM_1_AutoML_1_20260114_104213                           0.463111  0.214472  0.306147  0.139726                  0.214472\n",
+            "XGBoost_1_AutoML_1_20260114_104213                       0.501293  0.251295  0.334609  0.153313                  0.251295\n",
+            "XGBoost_2_AutoML_1_20260114_104213                       0.513003  0.263172  0.342915  0.154574                  0.263172\n",
+            "GBM_4_AutoML_1_20260114_104213                           0.514079  0.264277  0.356438  0.155549                  0.264277\n",
+            "GBM_2_AutoML_1_20260114_104213                           0.528611  0.27943   0.368352  0.160914                  0.27943\n",
+            "GBM_3_AutoML_1_20260114_104213                           0.528978  0.279818  0.370099  0.160985                  0.279818\n",
+            "DRF_1_AutoML_1_20260114_104213                           0.577347  0.333329  0.390519  0.174122                  0.333329\n",
+            "[10 rows x 6 columns]\n",
+            "\n",
+            "H2O AutoML — RMSE: 0.4508, MAE: 0.2921, R2: 0.8449\n",
+            "H2O session _sid_9d1e closed.\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/tmp/ipython-input-3210742507.py:31: H2ODeprecationWarning: Deprecated, use ``h2o.cluster().shutdown()``.\n",
+            "  h2o.shutdown(prompt=False)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Skipping auto-sklearn due to installation issues.\n",
+        "# import autosklearn.regression as automl\n",
+        "\n",
+        "# automl_skl = automl.AutoSklearnRegressor(\n",
+        "#     time_left_for_this_task=120,   # 2 minutes\n",
+        "#     per_run_time_limit=30,\n",
+        "#     seed=42\n",
+        "# )\n",
+        "# automl_skl.fit(X_train, y_train)\n",
+        "\n",
+        "# y_pred_skl = automl_skl.predict(X_test)\n",
+        "\n",
+        "# mse_skl  = mean_squared_error(y_test, y_pred_skl)\n",
+        "# rmse_skl = np.sqrt(mse_skl)\n",
+        "# mae_skl  = mean_absolute_error(y_test, y_pred_skl)\n",
+        "# r2_skl   = r2_score(y_test, y_pred_skl)\n",
+        "\n",
+        "# print(f\"Auto-sklearn — RMSE: {rmse_skl:.4f}, MAE: {mae_skl:.4f}, R2: {r2_skl:.4f}\")\n",
+        "\n",
+        "print(\"Auto-sklearn skipped due to persistent installation issues.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "84UPYYIGHX0k",
+        "outputId": "5c9b7c07-8ebe-499b-ce38-0d42051691e6"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Auto-sklearn skipped due to persistent installation issues.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install -q tpot\n",
+        "from tpot import TPOTRegressor\n",
+        "\n",
+        "tpot = TPOTRegressor(\n",
+        "    generations=3,          # réduit pour Colab\n",
+        "    population_size=10,\n",
+        "    random_state=42,\n",
+        "    n_jobs=1  # Changed to 1 to avoid distributed worker issues\n",
+        ")\n",
+        "tpot.fit(X_train, y_train)\n",
+        "\n",
+        "y_pred_tpot = tpot.predict(X_test)\n",
+        "\n",
+        "mse_tpot  = mean_squared_error(y_test, y_pred_tpot)\n",
+        "rmse_tpot = np.sqrt(mse_tpot)\n",
+        "mae_tpot  = mean_absolute_error(y_test, y_pred_tpot)\n",
+        "r2_tpot   = r2_score(y_test, y_pred_tpot)\n",
+        "\n",
+        "print(f\"TPOT — RMSE: {rmse_tpot:.4f}, MAE: {mae_tpot:.4f}, R2: {r2_tpot:.4f}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "9m5CnqdaIBFV",
+        "outputId": "446c8734-0b52-48b1-f1cb-2cd2e7f00444"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/tpot/tpot_estimator/estimator.py:458: UserWarning: Both generations and max_time_mins are set. TPOT will terminate when the first condition is met.\n",
+            "  warnings.warn(\"Both generations and max_time_mins are set. TPOT will terminate when the first condition is met.\")\n",
+            "/usr/local/lib/python3.12/dist-packages/distributed/node.py:188: UserWarning: Port 8787 is already in use.\n",
+            "Perhaps you already have a cluster running?\n",
+            "Hosting the HTTP server on port 40913 instead\n",
+            "  warnings.warn(\n",
+            "INFO:distributed.scheduler:State start\n",
+            "INFO:distributed.scheduler:  Scheduler at:     tcp://127.0.0.1:39951\n",
+            "INFO:distributed.scheduler:  dashboard at:  http://127.0.0.1:40913/status\n",
+            "INFO:distributed.scheduler:Registering Worker plugin shuffle\n",
+            "INFO:distributed.nanny:        Start Nanny at: 'tcp://127.0.0.1:44053'\n",
+            "INFO:distributed.scheduler:Register worker addr: tcp://127.0.0.1:36375 name: 0\n",
+            "INFO:distributed.scheduler:Starting worker compute stream, tcp://127.0.0.1:36375\n",
+            "INFO:distributed.core:Starting established connection to tcp://127.0.0.1:48094\n",
+            "INFO:distributed.scheduler:Receive client connection: Client-36aef337-f137-11f0-834d-0242ac1c000c\n",
+            "INFO:distributed.core:Starting established connection to tcp://127.0.0.1:48104\n",
+            "Generation:   0%|          | 0/3 [00:00<?, ?it/s]INFO:distributed.scheduler:Client Client-36aef337-f137-11f0-834d-0242ac1c000c requests to cancel 1 keys\n",
+            "INFO:distributed.scheduler:Scheduler cancels key eval_objective_list-c03851f73e537b9a5722307929def4a0.  Force=False\n",
+            "INFO:distributed.scheduler:Client Client-36aef337-f137-11f0-834d-0242ac1c000c requests to cancel 1 keys\n",
+            "INFO:distributed.scheduler:Scheduler cancels key eval_objective_list-e8b49ecfca456ac61f895fde0f931978.  Force=False\n",
+            "Generation:  33%|███▎      | 1/3 [1:02:23<2:04:47, 3743.66s/it]\n",
+            "INFO:distributed.scheduler:Retire worker addresses (stimulus_id='retire-workers-1768391736.6616852') (0,)\n",
+            "INFO:distributed.nanny:Closing Nanny at 'tcp://127.0.0.1:44053'. Reason: nanny-close\n",
+            "INFO:distributed.nanny:Nanny asking worker to close. Reason: nanny-close\n",
+            "INFO:distributed.core:Received 'close-stream' from tcp://127.0.0.1:48094; closing.\n",
+            "INFO:distributed.scheduler:Remove worker addr: tcp://127.0.0.1:36375 name: 0 (stimulus_id='handle-worker-cleanup-1768391736.6925187')\n",
+            "ERROR:distributed.scheduler:Removing worker 'tcp://127.0.0.1:36375' caused the cluster to lose scattered data, which can't be recovered: {'Series-4ba999a9b3fba138b72e98f2811eef41', 'DataFrame-01b1c5103210a64356afab0a5480d8ec'} (stimulus_id='handle-worker-cleanup-1768391736.6925187')\n",
+            "INFO:distributed.scheduler:Lost all workers\n",
+            "WARNING:distributed.nanny:Worker process still alive after 4.0 seconds, killing\n",
+            "INFO:distributed.nanny:Worker process 14892 was killed by signal 9\n",
+            "INFO:distributed.nanny:Nanny at 'tcp://127.0.0.1:44053' closed.\n",
+            "INFO:distributed.scheduler:Closing scheduler. Reason: unknown\n",
+            "INFO:distributed.scheduler:Scheduler closing all comms\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "TPOT — RMSE: 0.6664, MAE: 0.4840, R2: 0.6611\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names\n",
+            "  warnings.warn(\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Skipping MLJAR-Supervised due to installation/compatibility issues.\n",
+        "# from supervised.automl import AutoML\n",
+        "\n",
+        "# automl_mljar = AutoML(\n",
+        "#     mode=\"Compete\",\n",
+        "#     total_time_limit=120,   # 2 minutes\n",
+        "#     eval_metric=\"rmse\",\n",
+        "#     random_state=42\n",
+        "# )\n",
+        "# automl_mljar.fit(X_train, y_train)\n",
+        "\n",
+        "# y_pred_mljar = automl_mljar.predict(X_test)\n",
+        "\n",
+        "# mse_mljar  = mean_squared_error(y_test, y_pred_mljar)\n",
+        "# rmse_mljar = np.sqrt(mse_mljar)\n",
+        "# mae_mljar  = mean_absolute_error(y_test, y_pred_mljar)\n",
+        "# r2_mljar   = r2_score(y_test, y_pred_mljar)\n",
+        "\n",
+        "# print(f\"MLJAR — RMSE: {rmse_mljar:.4f}, MAE: {mae_mljar:.4f}, R2: {r2_mljar:.4f}\")\n",
+        "\n",
+        "print(\"MLJAR-Supervised skipped due to persistent installation/compatibility issues.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "mazPXT-FzeQR",
+        "outputId": "fb905303-ecf6-4e3c-d97d-8f35a740522a"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "MLJAR-Supervised skipped due to persistent installation/compatibility issues.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "results = pd.DataFrame([\n",
+        "    {\"Framework\": \"H2O AutoML\", \"RMSE\": rmse_h2o, \"MAE\": mae_h2o, \"R2\": r2_h2o},\n",
+        "    {\"Framework\": \"TPOT\", \"RMSE\": rmse_tpot, \"MAE\": mae_tpot, \"R2\": r2_tpot},\n",
+        "])\n",
+        "print(\"Comparaison des performances :\")\n",
+        "print(results.sort_values(by=\"RMSE\"))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bIdzB8vx0vS7",
+        "outputId": "08abdd8a-6d80-42bb-ecc0-4d5cc4c1672a"
+      },
+      "execution_count": 23,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Comparaison des performances :\n",
+            "    Framework      RMSE       MAE        R2\n",
+            "0  H2O AutoML  0.450804  0.292088  0.844916\n",
+            "1        TPOT  0.666394  0.483969  0.661112\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
